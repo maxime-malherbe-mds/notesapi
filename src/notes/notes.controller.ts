@@ -48,6 +48,12 @@ export class NotesController {
     return new NoteDto(note);
   }
 
+  @Get('title/:title')
+  async findByTitle(@Param('title') title: string): Promise<NoteDto[]> {
+    const notes = await this.notesService.findByTitle(title);
+    return notes.map((note) => new NoteDto(note));
+  }
+
   @Patch(':id')
   @ApiNoContentResponse({
     description: 'Successful update',
