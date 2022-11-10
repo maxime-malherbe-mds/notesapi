@@ -1,5 +1,7 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
+
+type NoteProperties = Required<Note>;
 export enum State {
   ACTIVE = 'ACTIVE',
   DEACTIVATED = 'DEACTIVATED',
@@ -25,4 +27,17 @@ export class Note {
   public createdAt: Date = new Date();
   @Column()
   public updatedAt: Date = new Date();
+
+
+  public static fromProperties(value: NoteProperties): Note {
+    const note = new Note();
+    note.id = value.id;
+    note.title = value.title;
+    note.content = value.content;
+    note.state = value.state;
+    note.createdAt = value.createdAt;
+    note.updatedAt = value.updatedAt;
+    return note;
+  }
+
 }
