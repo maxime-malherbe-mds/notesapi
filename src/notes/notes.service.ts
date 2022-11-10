@@ -25,11 +25,19 @@ export class NotesService {
   }
 
   findOne(id: number): Promise<Note> {
-    return this.notesRepository.findOneBy({ id });
+    const note = this.notesRepository.findOneBy({ id });
+    if (!note) {
+      throw new NotFoundException('Note introuvable');
+    }
+    return note;
   }
 
   findByTitle(title: string): Promise<Note[]> {
-    return this.notesRepository.findBy({ title });
+    const note = this.notesRepository.findBy({ title });
+    if (!note) {
+      throw new NotFoundException('Note introuvable');
+    }
+    return note;
   }
 
   async update(id: number, updateNoteDto: UpdateNoteDto) {
